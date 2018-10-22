@@ -439,7 +439,7 @@ Ek_RightShoulder = 1/2 * mRightShoulder * dot(vRightShoulder, vRightShoulder) + 
 Ek_RightArm = 1/2 * mRightArm * dot(vRightArm, vRightArm) + 1/2 * omegaRightArm' * IRightArm * omegaRightArm;
 Ek_RightHand = 1/2 * mRightHand * dot(vRightHand, vRightHand) + 1/2 * omegaRightHand' * IRightHand * omegaRightHand;
 
-Ek_RightShoulder = simplify(Ek_RightShoulder);
+% Ek_RightShoulder = simplify(Ek_RightShoulder);
 % Ek_RightArm = simplify(Ek_RightArm);
 % Ek_RightHand = simplify(Ek_RightHand);
 
@@ -450,11 +450,11 @@ Ek_LeftShank = 1/2 * mLeftShank * dot(vLeftShank, vLeftShank) + 1/2 * omegaLeftS
 Ek_LeftAnkle = 1/2 * mLeftAnkle * dot(vLeftAnkle, vLeftAnkle) + 1/2 * omegaLeftAnkle' * ILeftAnkle * omegaLeftAnkle;
 Ek_LeftFoot = 1/2 * mLeftFoot * dot(vLeftFoot, vLeftFoot) + 1/2 * omegaLeftFoot' * ILeftFoot * omegaLeftFoot;
 
-Ek_LeftHip = simplify(Ek_LeftHip);
-Ek_LeftThigh = simplify(Ek_LeftThigh);
-Ek_LeftShank = simplify(Ek_LeftShank);
-Ek_LeftAnkle = simplify(Ek_LeftAnkle);
-Ek_LeftFoot = simplify(Ek_LeftFoot);
+% Ek_LeftHip = simplify(Ek_LeftHip);
+% Ek_LeftThigh = simplify(Ek_LeftThigh);
+% Ek_LeftShank = simplify(Ek_LeftShank);
+% Ek_LeftAnkle = simplify(Ek_LeftAnkle);
+% Ek_LeftFoot = simplify(Ek_LeftFoot);
 
 %% Right lower limb
 Ek_RightHip = 1/2 * mRightHip * dot(vRightHip, vRightHip) + 1/2 * omegaRightHip' * IRightHip * omegaRightHip;
@@ -526,11 +526,13 @@ L_LeftAnkle = Ek_LeftAnkle - Ep_LeftAnkle;
 L_LeftFoot = Ek_LeftFoot - Ep_LeftFoot;
 
 %% Right Lower Limb
-L_RightHip = Ek_RightHip - Ep_RightHip;
-L_RightThigh = Ek_RightThigh - Ep_RightThigh;
-L_RightShank = Ek_RightShank - Ep_RightShank;
-L_RightAnkle = Ek_RightAnkle - Ep_RightAnkle;
-L_RightFoot = Ek_RightFoot - Ep_RightFoot;
+L_RightHip = Ek_LeftHip - Ep_LeftHip;
+L_RightThigh = Ek_LeftThigh - Ep_LeftThigh;
+L_RightShank = Ek_LeftShank - Ep_LeftShank;
+L_RightAnkle = Ek_LeftAnkle - Ep_LeftAnkle;
+L_RightFoot = Ek_LeftFoot - Ep_LeftFoot;
+
+
 
 
 % % Body 2 Left Shoulder

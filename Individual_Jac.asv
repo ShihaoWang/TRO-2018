@@ -1,0 +1,13 @@
+function Individual_Jac(L_i, q, qdot, qddot)
+
+%% This function is used to retrieve out the important terms need to evaluate the equation of motion of the robot
+% d/dt(pL_i/pqdot) - pL_i/pq = D_i(q) qddot + C(q, qdot)
+
+dpL_ipqdot_dt = jacobian(jacobian(L_i, qdot), [q',qdot']') * [qdot',qddot']';
+pL_i_pq = jacobian(L_i, q);
+
+eqn = dpL_ipqdot_dt - pL_i_pq;
+
+
+end
+
