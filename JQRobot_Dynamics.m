@@ -414,7 +414,7 @@ Ek_LeftHand = 1/2 * mLeftHand * dot(vLeftHand, vLeftHand) + 1/2 * omegaLeftHand'
 
 Ek_LeftShoulder = simplify(Ek_LeftShoulder);
 Ek_LeftArm = simplify(Ek_LeftArm);
-Ek_LeftHand = simplify(Ek_LeftHand);
+Ek_LeftHand = simplify(Ek_LeftHand); 
 
 %% Right upper limb
 Ek_RightShoulder = 1/2 * mRightShoulder * dot(vRightShoulder, vRightShoulder) + 1/2 * omegaRightShoulder' * IRightShoulder * omegaRightShoulder;
