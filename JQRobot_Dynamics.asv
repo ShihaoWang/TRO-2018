@@ -40,6 +40,57 @@ syms q1ddot_t q2ddot_t q3ddot_t q4ddot_t q5ddot_t q6ddot_t q7ddot_t q8ddot_t q9d
 
 g = 9.81;
 
+% Config = load('Init_Config.txt');
+% Velocity = load('Init_Velocity.txt');
+% State = [Config; Velocity];
+% rOx = State(1);                 
+% rOy = State(2);
+% rOz = State(3);
+% alpha = State(4);
+% beta = State(5);
+% gamma = State(6);
+% q1 = State(7);
+% q2 = State(7+1);
+% q3 = State(7+2);
+% q4 = State(7+3);
+% q5 = State(7+4);
+% q6 = State(7+5);
+% q7 = State(7+6);
+% q8 = State(7+7);
+% q9 = State(7+8);
+% q10 = State(7+9);
+% q11 = State(7+10);
+% q12 = State(7+11);
+% q13 = State(7+12);
+% q14 = State(7+13);
+% q15 = State(7+14);
+% q16 = State(7+15);
+% 
+% rOxdot = State(1 + 22);                 
+% rOydot = State(2+ 22);
+% rOzdot = State(3+ 22);
+% alphadot = State(4+ 22);
+% betadot = State(5+ 22);
+% gammadot = State(6+ 22);
+% q1dot = State(7+ 22);
+% q2dot = State(7+1+ 22);
+% q3dot = State(7+2+ 22);
+% q4dot = State(7+3+ 22);
+% q5dot = State(7+4+ 22);
+% q6dot = State(7+5+ 22);
+% q7dot = State(7+6+ 22);
+% q8dot = State(7+7+ 22);
+% q9dot = State(7+8+ 22);
+% q10dot = State(7+9+ 22);
+% q11dot = State(7+10+ 22);
+% q12dot = State(7+11+ 22);
+% q13dot = State(7+12+ 22);
+% q14dot = State(7+13+ 22);
+% q15dot = State(7+14+ 22);
+% q16dot = State(7+15+ 22);
+
+
+
 x = [rOx rOy rOz alpha beta gamma q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15 q16]';
 xdot = [rOxdot rOydot rOzdot alphadot betadot gammadot q1dot q2dot q3dot q4dot q5dot q6dot q7dot q8dot q9dot q10dot q11dot q12dot q13dot q14dot q15dot q16dot]';
 xddot = [rOxddot rOyddot rOzddot alphaddot betaddot gammaddot q1ddot q2ddot q3ddot q4ddot q5ddot q6ddot q7ddot q8ddot q9ddot q10ddot q11ddot q12ddot q13ddot q14ddot q15ddot q16ddot]';
@@ -53,6 +104,16 @@ mBody = 0.7474;
 vBody = jacobian(rBody, x) * xdot;
 wBody = jacobian(oBody, x) * xdot;
 omegaBody = EulerAngNVel2Omega(oBody, wBody);
+
+matlabFunction(rBody, vBody, omegaBody, IBody, RBody,...   %dynamics
+            'file','autoGen_Body.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % % Now it is the left shoulder
 % syms q1 q1dot q1ddot real
@@ -69,6 +130,16 @@ vLeftShoulder = jacobian(rLeftShoulder, x) * xdot;
 wLeftShoulder = jacobian(oLeftShoulder, x) * xdot; 
 omegaLeftShoulder = EulerAngNVel2Omega(oLeftShoulder, wLeftShoulder);
 
+matlabFunction(rLeftShoulder, vLeftShoulder, omegaLeftShoulder, ILeftShoulder, RLeftShoulder,...   %dynamics
+            'file','autoGen_LeftShoulder.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the left arm
 rLeftShoulder2LeftArm_self = [-0.01950677, 0.02575, 0]';        % One easy trick to allow for the comparison 
 rLeftArm_Ref = rLeftShoulder_Ref + RLeftShoulder * rLeftShoulder2LeftArm_self;
@@ -81,6 +152,16 @@ mLeftArm = 0.135;
 vLeftArm = jacobian(rLeftArm, x) * xdot;
 wLeftArm = jacobian(oLeftArm, x) * xdot;
 omegaLeftArm = EulerAngNVel2Omega(oLeftArm, wLeftArm);
+
+matlabFunction(rLeftArm, vLeftArm, omegaLeftArm, ILeftArm, RLeftArm,...   %dynamics
+            'file','autoGen_LeftArm.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % Now it is the left hand
 rLeftArm2LeftHand_self = [-0.072 0 0 ]';
@@ -95,6 +176,16 @@ vLeftHand = jacobian(rLeftHand, x) * xdot;
 wLeftHand = jacobian(oLeftHand, x) * xdot;
 omegaLeftHand = EulerAngNVel2Omega(oLeftHand, wLeftHand);
 
+matlabFunction(rLeftHand, vLeftHand, omegaLeftHand, ILeftHand, RLeftHand,...   %dynamics
+            'file','autoGen_LeftHand.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the right shoulder
 rBody2RightShoulder_self = [0.06272722, -0.00164721, 0.03188870]';   % This is the relative coordinate between the left shoulder position to the COM of shoulder in the local frame
 rRightShoulder_Ref = rBody + RBody * rBody2RightShoulder_self;
@@ -108,6 +199,16 @@ vRightShoulder = jacobian(rRightShoulder, x) * xdot;
 wRightShoulder = jacobian(oRightShoulder, x) * xdot;
 omegaRightShoulder = EulerAngNVel2Omega(oRightShoulder, wRightShoulder);
 
+matlabFunction(rRightShoulder, vRightShoulder, omegaRightShoulder, IRightShoulder, RRightShoulder,...   %dynamics
+            'file','autoGen_RightShoulder.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+        
 % Now it is the right arm
 rRightShoulder2RightArm_self = [0.01950677, 0.02575, 0]';
 rRightArm_Ref = rRightShoulder_Ref + RRightShoulder * rRightShoulder2RightArm_self;
@@ -120,6 +221,16 @@ mRightArm = 0.135;
 vRightArm = jacobian(rRightArm, x) * xdot;
 wRightArm = jacobian(oRightArm, x) * xdot;
 omegaRightArm = EulerAngNVel2Omega(oRightArm, wRightArm);
+
+matlabFunction(rRightArm, vRightArm, omegaRightArm, IRightArm, RRightArm,...   %dynamics
+            'file','autoGen_RightArm.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % Now it is the right hand
 rRightArm2RightHand_self = [0.072 0 0 ]';
@@ -134,6 +245,16 @@ vRightHand = jacobian(rRightHand, x) * xdot;
 wRightHand = jacobian(oRightHand, x) * xdot;
 omegaRightHand = EulerAngNVel2Omega(oRightHand, wRightHand);
 
+matlabFunction(rRightHand, vRightHand, omegaRightHand, IRightHand, RRightHand,...   %dynamics
+            'file','autoGen_RightHand.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the left hip
 rBody2LeftHip_Self = [-0.03172834, 0.02330279, -0.09266659]';
 rLeftHip_Ref = rBody + RBody * rBody2LeftHip_Self;
@@ -146,6 +267,16 @@ mLeftHip = 0.0832;
 vLeftHip = jacobian(rLeftHip, x) * xdot;
 wLeftHip = jacobian(oLeftHip, x) * xdot;
 omegaLeftHip = EulerAngNVel2Omega(oLeftHip, wLeftHip);
+
+matlabFunction(rLeftHip, vLeftHip, omegaLeftHip, ILeftHip, RLeftHip,...   %dynamics
+            'file','autoGen_LeftHip.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % Now it is the left thigh
 rLeftHip2LeftThigh_Self = [0.0165, -0.03225, -0.035]';
@@ -160,6 +291,16 @@ vLeftThigh = jacobian(rLeftThigh, x) * xdot;
 wLeftThigh = jacobian(oLeftThigh, x) * xdot;
 omegaLeftThigh = EulerAngNVel2Omega(oLeftThigh, wLeftThigh);
 
+matlabFunction(rLeftThigh, vLeftThigh, omegaLeftThigh, ILeftThigh, RLeftThigh,...   %dynamics
+            'file','autoGen_LeftThigh.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the left shank
 rLeftThigh2LeftShank_Self = [-0.001, 0, -0.0555]';
 rLeftShank_Ref = rLeftThigh_Ref + RLeftThigh * rLeftThigh2LeftShank_Self;
@@ -172,6 +313,16 @@ mLeftShank = 0.1381;
 vLeftShank = jacobian(rLeftShank, x) * xdot;
 wLeftShank = jacobian(oLeftShank, x) * xdot;
 omegaLeftShank = EulerAngNVel2Omega(oLeftShank, wLeftShank);
+
+matlabFunction(rLeftShank, vLeftShank, omegaLeftShank, ILeftShank, RLeftShank,...   %dynamics
+            'file','autoGen_LeftShank.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % Now it is the left ankle
 rLeftShank2LeftAnkle_Self = [0, 0, -0.066]';
@@ -186,6 +337,16 @@ vLeftAnkle = jacobian(rLeftAnkle, x) * xdot;
 wLeftAnkle = jacobian(oLeftAnkle, x) * xdot;
 omegaLeftAnkle = EulerAngNVel2Omega(oLeftAnkle, wLeftAnkle);
 
+matlabFunction(rLeftAnkle, vLeftAnkle, omegaLeftAnkle, ILeftAnkle, RLeftAnkle,...   %dynamics
+            'file','autoGen_LeftAnkle.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the left foot
 rLeftAnkle2LeftFoot_Self = [-0.0165, 0.03325, -0.035]';
 rLeftFoot_Ref = rLeftAnkle_Ref + RLeftAnkle * rLeftAnkle2LeftFoot_Self;
@@ -198,6 +359,16 @@ mLeftFoot = 0.0636;
 vLeftFoot = jacobian(rLeftFoot, x) * xdot;
 wLeftFoot = jacobian(oLeftFoot, x) * xdot;
 omegaLeftFoot = EulerAngNVel2Omega(oLeftFoot, wLeftFoot);
+
+matlabFunction(rLeftFoot, vLeftFoot, omegaLeftFoot, ILeftFoot, RLeftFoot,...   %dynamics
+            'file','autoGen_LeftFoot.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % Now it is the right hip
 rBody2RightHip_Self = [0.03172834, 0.02330279, -0.09266659]';
@@ -212,6 +383,16 @@ vRightHip = jacobian(rRightHip, x) * xdot;
 wRightHip = jacobian(oRightHip, x) * xdot;
 omegaRightHip = EulerAngNVel2Omega(oRightHip, wRightHip);
 
+matlabFunction(rRightHip, vRightHip, omegaRightHip, IRightHip, RRightHip,...   %dynamics
+            'file','autoGen_RightHip.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the right thigh
 rRightHip2RightThigh_Self = [-0.0165, -0.03225, -0.035]';
 rRightThigh_Ref = rRightHip_Ref + RRightHip * rRightHip2RightThigh_Self;
@@ -224,6 +405,16 @@ mRightThigh = 0.077;
 vRightThigh = jacobian(rRightThigh, x) * xdot;
 wRightThigh = jacobian(oRightThigh, x) * xdot;
 omegaRightThigh = EulerAngNVel2Omega(oRightThigh, wRightThigh);
+
+matlabFunction(rRightThigh, vRightThigh, omegaRightThigh, IRightThigh, RRightThigh,...   %dynamics
+            'file','autoGen_RightThigh.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
 
 % Now it is the right shank
 rRightThigh2RightShank_Self = [0.001, 0, -0.0555]';
@@ -238,6 +429,16 @@ vRightShank = jacobian(rRightShank, x) * xdot;
 wRightShank = jacobian(oRightShank, x) * xdot;
 omegaRightShank = EulerAngNVel2Omega(oRightShank, wRightShank);
 
+matlabFunction(rRightShank, vRightShank, omegaRightShank, IRightShank, RRightShank,...   %dynamics
+            'file','autoGen_RightShank.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 % Now it is the right ankle
 rRightShank2RightAnkle_Self = [0, 0, -0.066]';
 rRightAnkle_Ref = rRightShank_Ref + RRightShank * rRightShank2RightAnkle_Self;
@@ -250,6 +451,17 @@ mRightAnkle = 0.0892;
 vRightAnkle = jacobian(rRightAnkle, x) * xdot;
 wRightAnkle = jacobian(oRightAnkle, x) * xdot;
 omegaRightAnkle = EulerAngNVel2Omega(oRightAnkle, wRightAnkle);
+
+matlabFunction(rRightAnkle, vRightAnkle, omegaRightAnkle, IRightAnkle, RRightAnkle,...   %dynamics
+            'file','autoGen_RightAnkle.m',...
+            'vars',{...
+            'rOx', 'rOy', 'rOz', 'alpha', 'beta', 'gamma',...
+            'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8',...
+            'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16',...
+            'rOxdot', 'rOydot', 'rOzdot', 'alphadot', 'betadot', 'gammadot',...
+            'q1dot', 'q2dot', 'q3dot', 'q4dot', 'q5dot', 'q6dot', 'q7dot', 'q8dot',...
+            'q9dot', 'q10dot', 'q11dot', 'q12dot', 'q13dot', 'q14dot', 'q15dot', 'q16dot'});
+
 
 % Now it is the right foot
 rRightAnkle2RightFoot_Self = [0.0165, 0.03325, -0.035]';
@@ -411,13 +623,10 @@ save('p.mat','p');
 % matlabFunction(L_COM, 'file','L_COM_fn.m');
 
 %% The next expression is the angular momentum of the robot at instantaneous COM
-% H_COM = cross(rBody - rCOM, mBody * vBody) + cross(rLeftShoulder - rCOM, mLeftShoulder * vLeftShoulder) + cross(rLeftArm - rCOM, mLeftArm * vLeftArm) + ...
-%         cross(rLeftHand - rCOM, mLeftHand * vLeftHand) + cross(rRightShoulder - rCOM, mRightShoulder * vRightShoulder) + cross(rRightArm - rCOM, mRightArm * vRightArm) + ...
-%         cross(rRightHand - rCOM, mRightHand * vRightHand) + cross(rLeftHip - rCOM, mLeftHip * vLeftHip) + cross(rLeftThigh - rCOM, mLeftThigh * vLeftThigh) + ...
-%         cross(rLeftShank - rCOM, mLeftShank * vLeftShank) + cross(rLeftAnkle - rCOM, mLeftAnkle * vLeftAnkle) + cross(rLeftFoot - rCOM, mLeftFoot * vLeftFoot) + ...
-%         cross(rRightHip - rCOM, mRightHip * vRightHip) + cross(rRightThigh - rCOM, mRightThigh * vRightThigh) + cross(rRightShank - rCOM, mRightShank * vRightShank) + cross(rRightAnkle - rCOM, mRightAnkle * vRightAnkle) + cross(rRightFoot - rCOM, mRightFoot * vRightFoot);
 
-% H_COM = simplify(H_COM);
+State = [rOx rOy rOz alpha beta gamma q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15 q16...
+         rOxdot rOydot rOzdot alphadot betadot gammadot q1dot q2dot q3dot q4dot q5dot q6dot q7dot q8dot q9dot q10dot q11dot q12dot q13dot q14dot q15dot q16dot]';
+H_COM = H_COM_fn(State, p)
 % matlabFunction(H_COM, 'file','H_COM_fn.m');
 
 %% Equation of Motion
@@ -432,7 +641,7 @@ Ek_LeftShoulder = 1/2 * mLeftShoulder * dot(vLeftShoulder, vLeftShoulder) + 1/2 
 Ek_LeftArm = 1/2 * mLeftArm * dot(vLeftArm, vLeftArm) + 1/2 * omegaLeftArm' * ILeftArm * omegaLeftArm;
 Ek_LeftHand = 1/2 * mLeftHand * dot(vLeftHand, vLeftHand) + 1/2 * omegaLeftHand' * ILeftHand * omegaLeftHand;
 
-Ek_LeftShoulder = simplify(Ek_LeftShoulder);
+% Ek_LeftShoulder = simplify(Ek_LeftShoulder);
 
 %% Right upper limb
 Ek_RightShoulder = 1/2 * mRightShoulder * dot(vRightShoulder, vRightShoulder) + 1/2 * omegaRightShoulder' * IRightShoulder * omegaRightShoulder;
@@ -507,11 +716,18 @@ Ep_RightFoot = mRightFoot * g * rRightFoot(3);
 
 %% Body
 L_Body = Ek_Body - Ep_Body;
+% Individual_Jac(L_Body, x, xdot, xddot)
+
 
 %% Left Upper Limb
 L_LeftShoulder = Ek_LeftShoulder - Ep_LeftShoulder;
 L_LeftArm = Ek_LeftArm - Ep_LeftArm;
 L_LeftHand = Ek_LeftHand - Ep_LeftHand;
+
+% Individual_Jac(L_LeftShoulder, x, xdot, xddot)
+Individual_Jac(L_LeftArm, x, xdot, xddot)
+Individual_Jac(L_LeftHand, x, xdot, xddot)
+
 
 %% Right Upper Limb
 L_RightShoulder = Ek_RightShoulder - Ep_RightShoulder;
@@ -526,13 +742,11 @@ L_LeftAnkle = Ek_LeftAnkle - Ep_LeftAnkle;
 L_LeftFoot = Ek_LeftFoot - Ep_LeftFoot;
 
 %% Right Lower Limb
-L_RightHip = Ek_LeftHip - Ep_LeftHip;
-L_RightThigh = Ek_LeftThigh - Ep_LeftThigh;
-L_RightShank = Ek_LeftShank - Ep_LeftShank;
-L_RightAnkle = Ek_LeftAnkle - Ep_LeftAnkle;
-L_RightFoot = Ek_LeftFoot - Ep_LeftFoot;
-
-
+L_RightHip = Ek_RightHip - Ep_RightHip;
+L_RightThigh = Ek_RightThigh - Ep_RightThigh;
+L_RightShank = Ek_RightShank - Ep_RightShank;
+L_RightAnkle = Ek_RightAnkle - Ep_RightAnkle;
+L_RightFoot = Ek_RightFoot - Ep_RightFoot;
 
 
 % % Body 2 Left Shoulder

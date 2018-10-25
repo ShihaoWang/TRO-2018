@@ -11,17 +11,20 @@ dpL_ipqdot_dt = jacobian(jacobian(L_i, qdot), [q',qdot']') * [qdot',qddot']';
 pL_i_pq = jacobian(L_i, q)';
 eqn = dpL_ipqdot_dt - pL_i_pq;
 
-D_q = simplify(jacobian(eqn, qddot));
+D_q = jacobian(eqn, qddot);
+
+% D_q = simplify(jacobian(eqn, qddot));
 C_q_qdot = eqn - D_q * qddot;
-C_q_qdot = simplify(C_q_qdot);
+% C_q_qdot = simplify(C_q_qdot);
 
 D_q_t = subs(D_q,q',x_t');
 C_q_qdot_t = subs(C_q_qdot,q',x_t');
 C_q_qdot_t = subs(C_q_qdot_t,qdot',xdot_t');
+C_q_qdot_t = simplify(C_q_qdot_t,'Steps',1);
 
 ccode(D_q_t)
 
-ccdoe(C_q_qdot_t)
+ccode(C_q_qdot_t)
 
 end
 

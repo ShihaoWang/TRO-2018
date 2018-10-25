@@ -9,27 +9,27 @@ q9 = State(15);  q10 = State(16);  q11 = State(17);  q12 = State(18);  q13 = Sta
 
 %% Rotation matrix
 
-Rot.RBody = RotBody_fn(alpha,beta,gamma);
+Rot.RotBody = RotBody_fn(alpha,beta,gamma);
 
-Rot.RLeftShoulder = RotLeftShoulder_fn(alpha,beta,gamma,q1);
-Rot.RLeftArm = RotLeftArm_fn(alpha,beta,gamma,q1,q2);
-Rot.RLeftHand = RotLeftHand_fn(alpha,beta,gamma,q1,q2,q3);
+Rot.RotLeftShoulder = RotLeftShoulder_fn(alpha,beta,gamma,q1);
+Rot.RotLeftArm = RotLeftArm_fn(alpha,beta,gamma,q1,q2);
+Rot.RotLeftHand = RotLeftHand_fn(alpha,beta,gamma,q1,q2,q3);
 
-Rot.RRightShoulder = RotRightShoulder_fn(alpha,beta,gamma,q9);
-Rot.RRightArm = RotRightArm_fn(alpha,beta,gamma,q9,q10);
-Rot.RRightHand = RotRightHand_fn(alpha,beta,gamma,q9,q10,q11);
+Rot.RotRightShoulder = RotRightShoulder_fn(alpha,beta,gamma,q9);
+Rot.RotRightArm = RotRightArm_fn(alpha,beta,gamma,q9,q10);
+Rot.RotRightHand = RotRightHand_fn(alpha,beta,gamma,q9,q10,q11);
 
-Rot.RLeftHip = RotLeftHip_fn(alpha,beta,gamma,q12);
-Rot.RLeftThigh = RotLeftThigh_fn(alpha,beta,gamma,q12,q13);
-Rot.RLeftShank = RotLeftShank_fn(alpha,beta,gamma,q12,q13,q14);
-Rot.RLeftAnkle = RotLeftAnkle_fn(alpha,beta,gamma,q12,q13,q14,q15);
-Rot.RLeftFoot = RotLeftFoot_fn(alpha,beta,gamma,q12,q13,q14,q15,q16);
+Rot.RotLeftHip = RotLeftHip_fn(alpha,beta,gamma,q12);
+Rot.RotLeftThigh = RotLeftThigh_fn(alpha,beta,gamma,q12,q13);
+Rot.RotLeftShank = RotLeftShank_fn(alpha,beta,gamma,q12,q13,q14);
+Rot.RotLeftAnkle = RotLeftAnkle_fn(alpha,beta,gamma,q12,q13,q14,q15);
+Rot.RotLeftFoot = RotLeftFoot_fn(alpha,beta,gamma,q12,q13,q14,q15,q16);
 
-Rot.RRightHip = RotRightHip_fn(alpha,beta,gamma,q4);
-Rot.RRightThigh = RotRightThigh_fn(alpha,beta,gamma,q4,q5);
-Rot.RRightShank = RotRightShank_fn(alpha,beta,gamma,q4,q5,q6);
-Rot.RRightAnkle = RotRightAnkle_fn(alpha,beta,gamma,q4,q5,q6,q7);
-Rot.RRightFoot = RotRightFoot_fn(alpha,beta,gamma,q4,q5,q6,q7,q8);
+Rot.RotRightHip = RotRightHip_fn(alpha,beta,gamma,q4);
+Rot.RotRightThigh = RotRightThigh_fn(alpha,beta,gamma,q4,q5);
+Rot.RotRightShank = RotRightShank_fn(alpha,beta,gamma,q4,q5,q6);
+Rot.RotRightAnkle = RotRightAnkle_fn(alpha,beta,gamma,q4,q5,q6,q7);
+Rot.RotRightFoot = RotRightFoot_fn(alpha,beta,gamma,q4,q5,q6,q7,q8);
 
 end
 

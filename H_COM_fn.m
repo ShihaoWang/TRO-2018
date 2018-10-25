@@ -2,7 +2,7 @@ function H_COM = H_COM_fn(State, p)
 
 % This is to compute the angular moment of the robot with respect to the
 % center of mass of the robot
-
+ 
 mBody = p.mBody;
 
 mLeftShoulder = p.mLeftShoulder;            mLeftArm = p.mLeftArm;              mLeftHand = p.mLeftHand;
@@ -17,6 +17,7 @@ mRightFoot = p.mRightFoot;
 
 %% Position
 Pos = Rigid_Body_Position( State, p );
+rCOM = Pos.rCOM;
 rBody = Pos.rBody;
 
 rLeftShoulder = Pos.rLeftShoulder;              rLeftArm = Pos.rLeftArm;                rLeftHand = Pos.rLeftHand;
@@ -54,7 +55,7 @@ H_COM_Trans =   cross(rBody - rCOM, mBody * vBody) + cross(rLeftShoulder - rCOM,
 %% The next part of the angular momentum is the rotational part
 IBody = p.IBody;
 
-ILeftShoulder = p.ILeftShoulder;            ILeftArm = p.ILeftArm;              ILeftHand = p.ILeftHand = ILeftHand;
+ILeftShoulder = p.ILeftShoulder;            ILeftArm = p.ILeftArm;              ILeftHand = p.ILeftHand;
 
 IRightShoulder = p.IRightShoulder;          IRightArm = p.IRightArm;            IRightHand = p.IRightHand;
 
