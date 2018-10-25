@@ -11,7 +11,46 @@ load('p.mat')
 %% The list of the comparable variables
 % 1. Global COM position
 % 2. Local COM position
-% 3. 
+% 3. COM velocity
+% 4. Angular velocity of a certain link
+% 5. Moment of Inertia of this link in local frame
+
+% Left Shoulder
+[rLeftShoulder,vLeftShoulder,omegaLeftShoulder,ILeftShoulder,RLeftShoulder] = autoGen_LeftShoulder(State)
+% Left Arm
+[rLeftArm,vLeftArm,omegaLeftArm,ILeftArm,RLeftArm] = autoGen_LeftArm(State)
+% Left Hand
+[rLeftHand,vLeftHand,omegaLeftHand,ILeftHand,RLeftHand] = autoGen_LeftHand(State)
+
+% Right Hip
+[rRightHip,vRightHip,omegaRightHip,IRightHip,RRightHip] = autoGen_RightHip(State)
+% Right Thigh
+[rRightThigh,vRightThigh,omegaRightThigh,IRightThigh,RRightThigh] = autoGen_RightThigh(State)
+% Right Shank
+[rRightShank,vRightShank,omegaRightShank,IRightShank,RRightShank] = autoGen_RightShank(State)
+% Right Ankle
+[rRightAnkle,vRightAnkle,omegaRightAnkle,IRightAnkle,RRightAnkle] = autoGen_RightAnkle(State)
+% Right Foot
+[rRightFoot,vRightFoot,omegaRightFoot,IRightFoot,RRightFoot] = autoGen_RightFoot(State)
+
+% Right Shoulder
+[rRightShoulder,vRightShoulder,omegaRightShoulder,IRightShoulder,RRightShoulder] = autoGen_RightShoulder(State)
+% Right Arm
+[rRightArm,vRightArm,omegaRightArm,IRightArm,RRightArm] = autoGen_RightArm(State)
+% Right Hand
+[rRightHand,vRightHand,omegaRightHand,IRightHand,RRightHand] = autoGen_RightHand(State)
+
+% Lef Hip
+[rRightHip,vRightHip,omegaRightHip,IRightHip,RRightHip] = autoGen_RightHip(State)
+% Right Thigh
+[rRightThigh,vRightThigh,omegaRightThigh,IRightThigh,RRightThigh] = autoGen_RightThigh(State)
+% Right Shank
+[rRightShank,vRightShank,omegaRightShank,IRightShank,RRightShank] = autoGen_RightShank(State)
+% Right Ankle
+[rRightAnkle,vRightAnkle,omegaRightAnkle,IRightAnkle,RRightAnkle] = autoGen_RightAnkle(State)
+% Right Foot
+[rRightFoot,vRightFoot,omegaRightFoot,IRightFoot,RRightFoot] = autoGen_RightFoot(State)
+
 
 
 
