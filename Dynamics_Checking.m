@@ -3,6 +3,8 @@ function Dynamics_Checking()
 % This function is used to check the dynamics between the Python version
 % and the Matlab version
 
+format long
+
 Config = load('Init_Config.txt');
 Velocity = load('Init_Velocity.txt');
 State = [Config; Velocity];
@@ -16,7 +18,7 @@ load('p.mat')
 % 5. Moment of Inertia of this link in local frame
 
 % Body
-[rLeftBody,vLeftBody,omegaBody,IBody,RBody] = autoGen_Body(State)
+[rBody,vBody,omegaBody,IBody,RBody] = autoGen_Body(State)
 
 % Left Shoulder
 [rLeftShoulder,vLeftShoulder,omegaLeftShoulder,ILeftShoulder,RLeftShoulder] = autoGen_LeftShoulder(State)
@@ -53,6 +55,8 @@ load('p.mat')
 [rLeftAnkle,vLeftAnkle,omegaLeftAnkle,ILeftAnkle,RLeftAnkle] = autoGen_LeftAnkle(State)
 % Left Foot
 [rLeftFoot,vLeftFoot,omegaLeftFoot,ILeftFoot,RLeftFoot] = autoGen_LeftFoot(State)
+
+format short
 
 end
 
