@@ -295,7 +295,7 @@ matlabFunction(rLeftThigh, vLeftThigh, omegaLeftThigh, ILeftThigh, RLeftThigh,..
 % Now it is the left shank
 rLeftThigh2LeftShank_Self = [-0.001, 0, -0.0555]';
 rLeftShank_Ref = rLeftThigh_Ref + RLeftThigh * rLeftThigh2LeftShank_Self;
-AxisLeftShank = RLeftThigh * [-1 , 0, 0]';
+AxisLeftShank = RLeftThigh * [-1 , 0, 0];
 RLeftShank = RLeftThigh * Axis_Angle_2_Rot_Mat([-1, 0, 0], q14);
 rLeftShank_Ref2COM = [-0.02638657, 0, -0.0329934]';
 rLeftShank = rLeftShank_Ref + RLeftShank * rLeftShank_Ref2COM;
@@ -361,14 +361,15 @@ matlabFunction(rLeftFoot, vLeftFoot, omegaLeftFoot, ILeftFoot, RLeftFoot,...   %
 % Now it is the right hip
 rBody2RightHip_Self = [0.03172834, 0.02330279, -0.09266659]';
 rRightHip_Ref = rBody + RBody * rBody2RightHip_Self;
-AxisRightHip = RBody * [0 -1 0]';
-RRightHip = RBody * Axis_Angle_2_Rot_Mat([0, -1, 0], q4);
+AxisRightHip = RBody * []
+RRightHip = Euler2Rot(oRightHip);
 rRightHip_Ref2COM = [0.01065566, -0.01458538, -0.00268635]'; 
 rRightHip = rRightHip_Ref + RRightHip * rRightHip_Ref2COM;
 IRightHip = diag([0.00005, 0.00005, 0.00005])';
 mRightHip = 0.0832;
 vRightHip = jacobian(rRightHip, x) * xdot;
-omegaRightHip = omegaBody + AxisRightHip * q4dot;
+wRightHip = jacobian(oRightHip, x) * xdot;
+omegaRightHip = EulerAngNVel2Omega(oRightHip, wRightHip);
 
 matlabFunction(rRightHip, vRightHip, omegaRightHip, IRightHip, RRightHip,...   %dynamics
             'file','autoGen_RightHip.m',...
@@ -383,14 +384,15 @@ matlabFunction(rRightHip, vRightHip, omegaRightHip, IRightHip, RRightHip,...   %
 % Now it is the right thigh
 rRightHip2RightThigh_Self = [-0.0165, -0.03225, -0.035]';
 rRightThigh_Ref = rRightHip_Ref + RRightHip * rRightHip2RightThigh_Self;
-AxisRightThigh = RRightHip * [ 1 0 0]';
-RRightThigh = RRightHip * Axis_Angle_2_Rot_Mat([1 0 0], q5);
+oRightThigh = [alpha, beta - q4, gamma + q5];
+RRightThigh = Euler2Rot(oRightThigh);
 rRightThigh_Ref2COM = [0.0262606, 0, -0.01304877]';
 rRightThigh = rRightThigh_Ref + RRightThigh * rRightThigh_Ref2COM;
 IRightThigh = diag([1.8 * 10^(-5), 3 * 10^(-4), 1.8 * 10^(-5)]);
 mRightThigh = 0.077;
 vRightThigh = jacobian(rRightThigh, x) * xdot;
-omegaRightThigh = omegaRightHip + AxisRightThigh * q5dot;
+wRightThigh = jacobian(oRightThigh, x) * xdot;
+omegaRightThigh = EulerAngNVel2Omega(oRightThigh, wRightThigh);
 
 matlabFunction(rRightThigh, vRightThigh, omegaRightThigh, IRightThigh, RRightThigh,...   %dynamics
             'file','autoGen_RightThigh.m',...
@@ -405,14 +407,15 @@ matlabFunction(rRightThigh, vRightThigh, omegaRightThigh, IRightThigh, RRightThi
 % Now it is the right shank
 rRightThigh2RightShank_Self = [0.001, 0, -0.0555]';
 rRightShank_Ref = rRightThigh_Ref + RRightThigh * rRightThigh2RightShank_Self;
-AxisRightShank = RRightThigh * [ 1 0 0]';
-RRightShank = RRightThigh * Axis_Angle_2_Rot_Mat([1 0 0 ], q6);
+oRightShank = [alpha, beta - q4, gamma + q5 + q6]';
+RRightShank = Euler2Rot(oRightShank);
 rRightShank_Ref2COM = [0.02638657, 0, -0.0329934]';
 rRightShank = rRightShank_Ref + RRightShank * rRightShank_Ref2COM;
 IRightShank = diag([1*10^(-4), 1*10^(-4), 3.7987 * 10^(-5)]);
 mRightShank = 0.1381;
 vRightShank = jacobian(rRightShank, x) * xdot;
-omegaRightShank = omegaRightThigh + AxisRightShank * q6dot;
+wRightShank = jacobian(oRightShank, x) * xdot;
+omegaRightShank = EulerAngNVel2Omega(oRightShank, wRightShank);
 
 matlabFunction(rRightShank, vRightShank, omegaRightShank, IRightShank, RRightShank,...   %dynamics
             'file','autoGen_RightShank.m',...
@@ -427,14 +430,15 @@ matlabFunction(rRightShank, vRightShank, omegaRightShank, IRightShank, RRightSha
 % Now it is the right ankle
 rRightShank2RightAnkle_Self = [0, 0, -0.066]';
 rRightAnkle_Ref = rRightShank_Ref + RRightShank * rRightShank2RightAnkle_Self;
-AxisRightAnkle = RRightShank * [-1 0 0]';
-RRightAnkle = RRightShank * Axis_Angle_2_Rot_Mat([-1, 0, 0], q7);
+oRightAnkle = [alpha, beta - q4, gamma + q5 + q6 - q7]';
+RRightAnkle = Euler2Rot(oRightAnkle);
 rRightAnkle_Ref2COM = [0.02590533, 0.00688525, -0.0340719]';
 rRightAnkle = rRightAnkle_Ref + RRightAnkle * rRightAnkle_Ref2COM;
 IRightAnkle = diag([3 * 10^(-5), 3 * 10^(-5), 3 * 10^(-5)]);
 mRightAnkle = 0.0892;
 vRightAnkle = jacobian(rRightAnkle, x) * xdot;
-omegaRightAnkle = omegaRightShank + AxisRightAnkle * q7dot;
+wRightAnkle = jacobian(oRightAnkle, x) * xdot;
+omegaRightAnkle = EulerAngNVel2Omega(oRightAnkle, wRightAnkle);
 
 matlabFunction(rRightAnkle, vRightAnkle, omegaRightAnkle, IRightAnkle, RRightAnkle,...   %dynamics
             'file','autoGen_RightAnkle.m',...
@@ -450,14 +454,15 @@ matlabFunction(rRightAnkle, vRightAnkle, omegaRightAnkle, IRightAnkle, RRightAnk
 % Now it is the right foot
 rRightAnkle2RightFoot_Self = [0.0165, 0.03325, -0.035]';
 rRightFoot_Ref = rRightAnkle_Ref + RRightAnkle * rRightAnkle2RightFoot_Self;
-AxisRightFoot = RRightAnkle * [0 1 0]';
-RRightFoot = RRightAnkle * Axis_Angle_2_Rot_Mat([0 1 0], q8);
+oRightFoot = [alpha, beta - q4 + q8, gamma + q5 + q6 - q7]';
+RRightFoot = Euler2Rot(oRightFoot);
 rRightFoot_Ref2COM = [0.020799, -0.02575090, -0.02343266]';
 rRightFoot = rRightFoot_Ref + RRightFoot * rRightFoot_Ref2COM;
 IRightFoot = diag([1 * 10^(-4), 5 * 10^(-5), 1.5 * 10^(-4)]);
 mRightFoot = 0.0636;
 vRightFoot = jacobian(rRightFoot, x) * xdot;
-omegaRightFoot = omegaRightAnkle + AxisRightFoot * q8dot;
+wRightFoot = jacobian(oRightFoot, x) * xdot;
+omegaRightFoot = EulerAngNVel2Omega(oRightFoot, wRightFoot);
 
 matlabFunction(rRightFoot, vRightFoot, omegaRightFoot, IRightFoot, RRightFoot,...   %dynamics
             'file','autoGen_RightFoot.m',...
